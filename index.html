@@ -43,13 +43,19 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script>
-        var iframe = document.getElementById('sc-player');
-        var widget = SC.Widget(iframe);
+        function playMusic() {
+            const musicHolder = document.getElementById('musicHolder');
+            if (musicHolder.style.display === 'none') {
+                musicHolder.style.display = 'block';
+                // remove event listeners after first play
+                window.removeEventListener('scroll', playMusic);
+                window.removeEventListener('focus', playMusic);
+            }
+        }
     
-        widget.bind(SC.Widget.Events.FINISH, function() {
-            widget.seekTo(0);
-            widget.play();
-        });
+        // Trigger on first scroll or tab focus
+        window.addEventListener('scroll', playMusic);
+        window.addEventListener('focus', playMusic);
     </script>
 </head>
 <body id="home">
