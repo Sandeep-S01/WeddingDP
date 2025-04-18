@@ -43,19 +43,24 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script>
-        function playMusic() {
+        function loadAndPlayMusic() {
             const musicHolder = document.getElementById('musicHolder');
-            if (musicHolder.style.display === 'none') {
-                musicHolder.style.display = 'block';
-                // remove event listeners after first play
-                window.removeEventListener('scroll', playMusic);
-                window.removeEventListener('focus', playMusic);
+            if (!musicHolder.innerHTML) {  // Check if iframe is already loaded
+                musicHolder.innerHTML = `
+                    <iframe width="0" height="0" scrolling="no" frameborder="no" allow="autoplay"
+                        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/217518953&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false">
+                    </iframe>
+                `;
+                window.removeEventListener('scroll', loadAndPlayMusic);
+                window.removeEventListener('focus', loadAndPlayMusic);
+                window.removeEventListener('click', loadAndPlayMusic);
             }
         }
-
-        // Trigger on first scroll or tab focus
-        window.addEventListener('scroll', playMusic);
-        window.addEventListener('focus', playMusic);
+    
+        // Adding click as an extra reliable trigger
+        window.addEventListener('scroll', loadAndPlayMusic);
+        window.addEventListener('focus', loadAndPlayMusic);
+        window.addEventListener('click', loadAndPlayMusic);
     </script>
 </head>
 
@@ -74,11 +79,12 @@
             <button class="music-box-toggle-btn">
                 <i class="fa fa-music"></i>
             </button>
-            <div class="music-holder" id="musicHolder" style="display:none;">
+            <div id="musicHolder"></div>
+            <!-- <div class="music-holder" id="musicHolder" style="display:none;">
                 <iframe width="0" height="0" scrolling="no" frameborder="no" allow="autoplay"
                     src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/217518953&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false">
                 </iframe>
-            </div>
+            </div> -->
         </div>
         <!-- end music box -->
         <!-- start of hero -->
