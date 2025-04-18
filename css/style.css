@@ -341,6 +341,7 @@ a:focus {
 .section-title, .section-title-white {
   text-align: center;
   margin-bottom: 60px;
+  margin-top: 60px;
   position: relative;
 }
 .header-style-1 #navbar > ul > li > a, .header-style-2 #navbar > ul > li > a {
